@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/db_connect.php' ;
+require __DIR__ . '/../database/db_connect.php' ;
 require __DIR__ . "/../Input.php";
 
 // protect from looking at blank pages past the number of results
