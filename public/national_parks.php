@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../database/db_connect.php' ;
+require __DIR__ . '/db_connect.php' ;
 require __DIR__ . "/../Input.php";
 
 // protect from looking at blank pages past the number of results
@@ -79,7 +79,7 @@ if ($_POST) {
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>National Parks</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Amatica+SC|Averia+Gruesa+Libre|Frijole|Oldenburg|Stalinist+One|Trade+Winds" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/css/national_parks.css">
 </head>
