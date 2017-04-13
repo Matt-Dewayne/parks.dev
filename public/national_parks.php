@@ -85,7 +85,7 @@ if ($_POST) {
 </head>
 <body>
 
-	<h1>National Parks</h1>
+	<h2>National Parks</h2>
 
 	<form method="GET">	
 		<ul class="pagination">
