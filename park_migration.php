@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/db_connect.php' ;
+require __DIR__ . '/database/db_connect.php' ;
 
 $dropExistingTable = "DROP TABLE IF EXISTS national_parks;";
 $dbc->exec($dropExistingTable);
