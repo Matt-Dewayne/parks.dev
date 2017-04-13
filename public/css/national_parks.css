@@ -1,0 +1,26 @@
+h1 {
+	font-family: 'Trade Winds', cursive;
+	font-size: 3em;
+	text-align: center;
+	color: black;
+}
+
+#table {
+	overflow-x:auto;
+}
+
+@media (min-width: 940px){
+	body {
+		padding-left: 8%;
+		padding-right: 8%;
+	}
+
+	h1 {
+		font-size: 7em;
+	}
+	
+	.fa {
+	   	font-size: 0.8em;
+	   	padding-right: .3%;
+	}
+}
