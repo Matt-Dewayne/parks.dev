@@ -91,12 +91,16 @@ class Park
      * returns $resultsPerPage number of results for the given page number
      */
     public static function paginate($pageNo, $resultsPerPage = 4) {
-        // TODO: call dbConnect to ensure we have a database connection
-        // TODO: calculate the limit and offset needed based on the passed
-        //       values
-        // TODO: use the $dbc static property to query the database with the
-        //       calculated limit and offset
-        // TODO: return an array of the found Park objects
+        self::dbConnect();
+
+        $offset = ($pageNo - 1) * $resultsPerPage;
+
+        $statement = self::$dbc->prepare('SELECT * FROM national_parks LIMIT :limit OFFSET :offset');
+        $statement->bindValue(':limit', $resultsPerPage, PDO::PARAM_INT);
+        $statement->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $statement->execute();
+        
+        return $parks = $statement->fetchAll(PDO::FETCH_ASSOC); 
     }
 
     /////////////////////////////////////
