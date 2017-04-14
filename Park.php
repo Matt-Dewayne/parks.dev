@@ -77,8 +77,8 @@ class Park
             $singlePark->id = $park['id'];
             $singlePark->name = $park['name'];
             $singlePark->location = $park['location'];
-            $singlePark->date_established = $park['date_established'];
-            $singlePark->area_in_acres = $park['area_in_acres'];
+            $singlePark->dateEstablished = $park['date_established'];
+            $singlePark->areaInAcres = $park['area_in_acres'];
             $singlePark->description = $park['description'];
 
             array_push($parkArray, $singlePark);
