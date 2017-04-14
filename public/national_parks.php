@@ -1,25 +1,13 @@
 <?php
-require __DIR__ . '/../database/db_connect.php' ;
 require __DIR__ . "/../Input.php";
+require __DIR__ . "/../Park.php";
 
 // protect from looking at blank pages past the number of results
 # of results / limit to get number of total pages, round up
-function getLastPage($dbc, $limit) {
-	$statement = $dbc->query("SELECT count(*) from national_parks");
-	$count = $statement->fetch()[0]; // to get the count
+function getLastPage($limit) {
+	$count = Park::count(); // to get the count
 	$lastPage = ceil($count / $limit);
 	return $lastPage;
-}
-
-function getPaginatedParks($dbc, $page, $limit) {
-	$offset = ($page - 1) * $limit;
-
-	$statement = $dbc->prepare('SELECT * FROM national_parks LIMIT :limit OFFSET :offset');
-	$statement->bindValue(':limit', $limit, PDO::PARAM_INT);
-	$statement->bindValue(':offset', $offset, PDO::PARAM_INT);
-	$statement->execute();
-	
-	return $statement->fetchAll(PDO::FETCH_ASSOC); 
 }
 
 function handleOutOfRangeRequests($page, $lastPage) {
@@ -33,37 +21,28 @@ function handleOutOfRangeRequests($page, $lastPage) {
 	}
 }
 
-function pageController($dbc) {
-
+function pageController() {
 	$data = [];
-	
 	$limit = 4;
 	$page = Input::get('page', 1);
-
-	$lastPage = getLastPage($dbc, $limit);
-
+	$lastPage = getLastPage($limit);
 	handleOutOfRangeRequests($page, $lastPage);
-
-	$data['parks'] = getPaginatedParks($dbc, $page, $limit);
+	$data['parks'] = Park::paginate($page, $limit);;
 	$data['page'] = $page;
 	$data['lastPage'] = $lastPage;
-
 	return $data;
 }
+extract(pageController());
 
-extract(pageController($dbc));
 
-
-if ($_POST) {
-	$insert = "INSERT INTO national_parks (name, location, date_established, area_in_acres, description) VALUES (:name, :location, :date_established, :area_in_acres, :description)";
-	$statement = $dbc->prepare($insert);
-    $statement->bindValue(':name', htmlspecialchars(strip_tags(Input::get("parkName"))), PDO::PARAM_STR);
-    $statement->bindValue(':location', htmlspecialchars(strip_tags(Input::get("parkLocation"))), PDO::PARAM_STR);
-    $statement->bindValue(':date_established', htmlspecialchars(strip_tags(Input::get("parkDate"))), PDO::PARAM_STR);
-    $statement->bindValue(':area_in_acres', htmlspecialchars(strip_tags(Input::get("parkArea"))), PDO::PARAM_STR);
-    $statement->bindValue(':description', htmlspecialchars(strip_tags(Input::get("parkDesc"))), PDO::PARAM_STR);
-
-    $statement->execute();
+if (!empty($_POST)) {
+	$park = new Park();
+	$park->name = htmlspecialchars(strip_tags(Input::get("parkName")));
+	$park->location = htmlspecialchars(strip_tags(Input::get("parkLocation")));
+	$park->areaInAcres = htmlspecialchars(strip_tags(Input::get("parkArea")));
+	$park->dateEstablished = htmlspecialchars(strip_tags(Input::get("parkDate")));
+	$park->description = htmlspecialchars(strip_tags(Input::get("parkDesc")));
+	$park->insert(); 
     header("location: national_parks.php?page=$lastPage");
 }
 
