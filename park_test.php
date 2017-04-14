@@ -1,8 +1,9 @@
 <?php
 require "Park.php";
 
-echo Park::dbConnect();
-echo $count;
+echo Park::count(). PHP_EOL;
+
+print_r(Park::all());
 
 
 ?>
