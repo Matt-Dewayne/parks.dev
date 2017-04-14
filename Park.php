@@ -65,12 +65,26 @@ class Park
      * returns all the records
      */
     public static function all() {
-        // TODO: call dbConnect to ensure we have a database connection
-        // TODO: use the $dbc static property to query the database for all the
-        //       records in the parks table
-        // TODO: iterate over the results array and transform each associative
-        //       array into a Park object
-        // TODO: return an array of Park objects
+        self::dbConnect();
+
+        $parks = self::$dbc->query("Select * from national_parks");
+
+        $parkArray = [];
+
+        foreach ($parks as $park) {
+            $singlePark = new Park();
+
+            $singlePark->id = $park['id'];
+            $singlePark->name = $park['name'];
+            $singlePark->location = $park['location'];
+            $singlePark->date_established = $park['date_established'];
+            $singlePark->area_in_acres = $park['area_in_acres'];
+            $singlePark->description = $park['description'];
+
+            array_push($parkArray, $singlePark);
+        }
+        
+        return $parkArray;
     }
 
     /**
