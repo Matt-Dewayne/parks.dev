@@ -55,17 +55,10 @@ class Park
      * returns the number of records in the database
 */
     public static function count() {
-        // TODO: call dbConnect to ensure we have a database connection
-        if (self::dbConnect() == true){
-            $connect = self::$dbc->query("Select count(*) from national_parks");
-            $count = $connect->fetch()[0];
-            return $count;
-
-
-        }
-
-        // TODO: use the $dbc static property to query the database for the
-        //       number of existing park records
+        self::dbConnect();
+        $connect = self::$dbc->query("Select count(*) from national_parks");
+        $count = $connect->fetch()[0];
+        return $count;
     }
 
     /**
