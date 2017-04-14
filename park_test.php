@@ -1,7 +1,7 @@
 <?php
 require "Park.php";
 
-echo self::dbConnect();
+echo Park::dbConnect();
 echo $count;
 
 
